@@ -1,60 +1,56 @@
-const userModel = require("../models/houseModel");
+const houseModel = require("../models/houseModel");
 
-const getAllUsers = async (req, res) => {
+const getAllHouses = async (req, res) => {
     try {
-        const users = await userModel.getUsers();
-        res.json(users);
+        const houses = await houseModel.getHouses();
+        res.json(houses);
     } catch (error) {
-        res.status(404).json({ message: "Erro ao buscar usuários." });
+        res.status(500).json({ message: "Erro ao buscar casas." });
     }
 };
 
-const getUser = async (req, res) => {
+const getHouse = async (req, res) => {
     try {
-        const user = await userModel.getUserById(req.params.id);
-        if (!user) {
-            return res.status(404).json({ message: "Usuário não encontrado." });
+        const house = await houseModel.getHouseById(req.params.id);
+        if (!house) {
+            return res.status(404).json({ message: "Casa não encontrada." });
         }
-        res.json(user);
+        res.json(house);
     } catch (error) {
-        res.status(500).json({ message: "Erro ao buscar usuário." });
+        res.status(500).json({ message: "Erro ao buscar casa." });
     }
 };
 
-const createUser = async (req, res) => {
+const createHouse = async (req, res) => {
     try {
-        const { name, email } = req.body;
-        const newUser = await userModel.createUser(name, email);
-        res.status(201).json(newUser);
+        const { name, founder } = req.body;
+        const newFounder = await houseModel.createHouse(name, founder);
+        res.status(201).json(newFounder);
     } catch (error) {
-	 console.log(error);
-        if (error.code === "23505") { // Código de erro do PostgreSQL para chave única violada
-            return res.status(400).json({ message: "E-mail já cadastrado." });
-        }
-        res.status(500).json({ message: "Erro ao criar usuário." });
+        res.status(500).json({ message: "Erro ao criar casa." });
     }
 };
 
-const updateUser = async (req, res) => {
+const deleteHouse = async (req, res) => {
     try {
-        const { name, email } = req.body;
-        const updatedUser = await userModel.updateUser(req.params.id, name, email);
-        if (!updatedUser) {
-            return res.status(404).json({ message: "Usuário não encontrado." });
-        }
-        res.json(updatedUser);
-    } catch (error) {
-        res.status(500).json({ message: "Erro ao atualizar usuário." });
-    }
-};
-
-const deleteUser = async (req, res) => {
-    try {
-        const message = await userModel.deleteUser(req.params.id);
+        const message = await houseModel.deleteHouse(req.params.id);
         res.json(message);
     } catch (error) {
-        res.status(500).json({ message: "Erro ao deletar usuário." });
+        res.status(500).json({ message: "Erro ao deletar casa." });
     }
 };
 
-module.exports = { getAllUsers, getUser, createUser, updateUser, deleteUser };
+const updateHouse = async (req, res) => {
+    try {
+        const { name, founder } = req.body;
+        const updateHouse = await houseModel.updateHouse(req.params.id, name, founder);
+        if (!updateHouse) {
+            return res.status(404).json({ message: "casa não encontrada." });
+        }
+        res.json(updateHouse);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao atualizar casa." });
+    }
+};
+
+module.exports = { getAllHouses, getHouse, createHouse, deleteHouse, updateHouse };
