@@ -24,10 +24,10 @@ const getHouse = async (req, res) => {
 const createHouse = async (req, res) => {
     try {
         const { name, founder } = req.body;
-        const newFounder = await houseModel.createHouse(name, founder);
-        res.status(201).json(newFounder);
+        const newHouse = await houseModel.createHouse(name, founder);
+        res.status(201).json(newHouse);
     } catch (error) {
-        res.status(500).json({ message: "Erro ao criar a casa." });
+        res.status(500).json({ message: "Erro ao criar casa." });
     }
 };
 

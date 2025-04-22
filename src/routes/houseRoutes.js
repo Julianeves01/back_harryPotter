@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const houseController = require("../controllers/houseController.js");
+const apiKeyMiddleware = require("../config/apiKey");
+
+router.use(apiKeyMiddleware); // 🔒 Protege todas as rotas
+
 
 /**
  * @swagger
@@ -19,7 +23,7 @@ const houseController = require("../controllers/houseController.js");
  *       200:
  *         description: Lista de casas
  */
-router.get("/houses", houseController.getAllHouses);
+router.get("/", houseController.getAllHouses);
 
 /**
  * @swagger
@@ -39,7 +43,7 @@ router.get("/houses", houseController.getAllHouses);
  *       404:
  *         description: Casa não encontrada
  */
-router.get("/houses/:id", houseController.getHouse);
+router.get("/:id", houseController.getHouse);
 
 /**
  * @swagger
@@ -62,7 +66,7 @@ router.get("/houses/:id", houseController.getHouse);
  *       201:
  *         description: Casa criada
  */
-router.post("/houses", houseController.createHouse);
+router.post("/", houseController.createHouse);
 
 /**
  * @swagger
@@ -80,7 +84,7 @@ router.post("/houses", houseController.createHouse);
  *       200:
  *         description: Casa deletada
  */
-router.delete("/houses/:id", houseController.deleteHouse);
+router.delete("/:id", houseController.deleteHouse);
 
 /**
  * @swagger
@@ -109,6 +113,6 @@ router.delete("/houses/:id", houseController.deleteHouse);
  *       200:
  *         description: Casa atualizada
  */
-router.put("/houses/:id", houseController.updateHouse);
+router.put("/:id", houseController.updateHouse);
 
 module.exports = router;

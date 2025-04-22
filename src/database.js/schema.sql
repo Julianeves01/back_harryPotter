@@ -5,8 +5,8 @@ CREATE DATABASE hp_db;
 
 CREATE TABLE houses (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    founder VARCHAR(100) UNIQUE NOT NULL
+    name VARCHAR(100) UNIQUE NOT NULL,
+    founder VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE wizards (

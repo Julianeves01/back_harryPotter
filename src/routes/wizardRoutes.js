@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const wizardController = require("../controllers/wizardController.js");
 const upload = require("./../config/upload.js");
+const apiKeyMiddleware = require('../config/apiKey.js')
+
+router.use(apiKeyMiddleware); //aplica para todas as rotas abaixo
 
 /**
  * @swagger
@@ -26,7 +29,7 @@ const upload = require("./../config/upload.js");
  *       200:
  *         description: Lista de bruxos
  */
-router.get("/wizards", wizardController.getAllWizards);
+router.get("/", wizardController.getAllWizards);
 
 /**
  * @swagger
@@ -46,7 +49,7 @@ router.get("/wizards", wizardController.getAllWizards);
  *       404:
  *         description: Bruxo não encontrado
  */
-router.get("/wizards/:id", wizardController.getWizard);
+router.get("/:id", wizardController.getWizard);
 
 /**
  * @swagger
@@ -72,7 +75,7 @@ router.get("/wizards/:id", wizardController.getWizard);
  *       201:
  *         description: Bruxo criado
  */
-router.post("/wizards", upload.single("photo"), wizardController.createWizard);
+router.post("/", upload.single("photo"), wizardController.createWizard);
 
 /**
  * @swagger
@@ -90,7 +93,7 @@ router.post("/wizards", upload.single("photo"), wizardController.createWizard);
  *       200:
  *         description: Bruxo deletado
  */
-router.delete("/wizards/:id", wizardController.deleteWizard);
+router.delete("/:id", wizardController.deleteWizard);
 
 /**
  * @swagger
@@ -119,6 +122,6 @@ router.delete("/wizards/:id", wizardController.deleteWizard);
  *       200:
  *         description: Bruxo atualizado
  */
-router.put("/wizards/:id", wizardController.updateWizard);
+router.put("/:id", wizardController.updateWizard);
 
 module.exports = router;

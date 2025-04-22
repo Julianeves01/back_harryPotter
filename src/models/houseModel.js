@@ -11,7 +11,8 @@ const getHouseById = async (id) => {
 };
 
 const createHouse = async (name, founder) => {
-    const result = await pool.query("INSERT INTO houses (name,founder) Values ($1,$2) RETURNING *" , [name, founder]
+    const result = await pool.query("INSERT INTO houses (name,founder) Values ($1,$2) RETURNING *" , 
+        [name, founder]
     );
     return result.rows[0];    
 };

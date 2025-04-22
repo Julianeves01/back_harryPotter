@@ -45,10 +45,10 @@ const deleteWizard = async (id) => {
     const result = await pool.query("DELETE FROM wizards WHERE id = $1 RETURNING *", [id]);
 
     if (result.rowCount === 0) {
-        return { error: "Bruxo não encontrado." };
+        return { error: "Wizard não encontrado." };
     }
 
-    return { message: "Bruxo deletado com sucesso." };
+    return { message: "Wizard deletado com sucesso." };
 };
 
 const updateWizard = async (id, name, house_id) => {
